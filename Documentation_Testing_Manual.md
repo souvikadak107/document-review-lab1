@@ -2,7 +2,7 @@
 
 ## Purpose
 Documentation testing ensures that all user and system documents are **clear, accurate, and complete**.  
-It validates that instructions and technical references correctly represent the software’s functionality.
+It validates that instructions and technical references correctly represent the software’s functionali.
 
 ## Types of Documentation
 | Type | Audience | Purpose | Examples |
