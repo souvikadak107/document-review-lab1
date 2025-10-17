@@ -1,0 +1,69 @@
+name: Docs Quality
+
+on:
+  pull_request:
+    paths: ["**/*.md"]
+  push:
+    branches: [main]
+    paths: ["**/*.md"]
+
+jobs:
+  lint-docs:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      # ---------- markdownlint ----------
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - name: Install markdownlint-cli
+        run: npm install -g markdownlint-cli
+
+      - name: Run markdownlint
+        run: markdownlint "**/*.md"
+
+      # ---------- proselint & codespell ----------
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install proselint & codespell
+        run: |
+          python -m pip install --upgrade pip
+          pip install proselint codespell
+
+      - name: Run proselint (grammar/style)
+        run: proselint user_guide.md
+
+      - name: Run codespell (spelling)
+        run: codespell -q 3 .
+
+      # ---------- Vale (editorial/style) ----------
+      - name: Install Vale
+        run: |
+          curl -fsSL https://install.goreleaser.com/github.com/errata-ai/vale.sh | sh
+          echo "$PWD/bin" >> $GITHUB_PATH
+          echo "$HOME/.local/bin" >> $GITHUB_PATH
+
+      - name: Prepare Vale styles
+        run: |
+          mkdir -p .vale/styles
+          vale sync || true
+
+      - name: Run Vale
+        run: vale user_guide.md
+
+      - name: Summarize results
+        if: ${{ always() }}
+        run: |
+          echo "### Documentation Quality Report" >> $GITHUB_STEP_SUMMARY
+          echo "- markdownlint: Markdown formatting rules" >> $GITHUB_STEP_SUMMARY
+          echo "- proselint: Grammar and style" >> $GITHUB_STEP_SUMMARY
+          echo "- codespell: Spelling checks" >> $GITHUB_STEP_SUMMARY
+          echo "- Vale: Editorial guidance" >> $GITHUB_STEP_SUMMARY

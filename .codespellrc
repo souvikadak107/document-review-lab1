@@ -1,0 +1,4 @@
+[codespell]
+skip = .git,*.png,*.jpg,*.jpeg,*.pdf,node_modules,bin,.vale/styles
+ignore-words-list = nd,teh,fo
+quiet-level = 3
