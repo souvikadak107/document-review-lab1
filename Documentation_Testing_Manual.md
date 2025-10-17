@@ -17,6 +17,11 @@ It validates that instructions and technical references correctly represent the 
 - [ ] Screenshots match current UI  
 - [ ] Formatting is readable and follows style guide  
 
+## Suggested Improvements
+- Reworded introduction for clarity.
+- Corrected inconsistent capitalization.
+
+
 ---
 
 *Author: Souvik Adak*  
