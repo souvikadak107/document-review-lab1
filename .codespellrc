@@ -1,4 +1,4 @@
 [codespell]
-skip = .git,*.png,*.jpg,*.jpeg,*.pdf,node_modules,bin,.vale/styles
-ignore-words-list = nd,teh,fo
+skip = .git,*.png,*.jpg,*.jpeg,*.pdf
+ignore-words-list = aplication,artefact
 quiet-level = 3
